@@ -7,3 +7,5 @@ __pycache__/
 #env files
 .env
 *.DS_Store
+
+venv/
