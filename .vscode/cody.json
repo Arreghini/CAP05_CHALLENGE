@@ -1,0 +1,11 @@
+{
+    "commands": {
+        "Inspect": {
+            "prompt": "Genera un README lo mas detallado posible.",
+            "context": {
+                "codebase": false,
+                "currentDir": true
+            }
+        }
+    }
+}

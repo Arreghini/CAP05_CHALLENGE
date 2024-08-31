@@ -1,0 +1,31 @@
+version: '3'
+services:
+
+  orchestrator:
+    build: ./src/orchestrator
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--reload"]
+    ports:
+      - 8000:80
+    volumes:
+      - ./src/orchestrator:/app
+    env_file:
+    - .env
+
+
+
+  frontend:
+    build: ./src/frontend
+    command: ["streamlit", "run", "main.py" ,"--server.port=80", "--server.address=0.0.0.0"]
+    ports:
+      - 8501:80
+    volumes:
+      - ./src/frontend:/app
+
+
+  cache:
+    image: redis/redis-stack
+    volumes:
+      - ./redis_data:/data:rw
+    ports:
+      - 6379:6379
+    restart: unless-stopped
