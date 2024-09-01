@@ -5,6 +5,7 @@
 InternetWhisper es un innovador chatbot conversacional de inteligencia artificial generativa con la capacidad única de acceder a Internet en tiempo real. Inspirado en You.com y Google's Bard, este proyecto ofrece una experiencia de conversación enriquecida con información actualizada del mundo online.
 
 Características principales:
+
 - Acceso a información en tiempo real de Internet
 - Conversaciones fluidas y contextuales
 - Almacenamiento eficiente de información en una base de datos vectorial Redis
@@ -48,6 +49,7 @@ La aplicación integra estas tecnologías para procesar las consultas de los usu
    ```bash
    docker-compose build
    docker-compose up
+   ```
 
 ## Definición OpenAPI de la API
 

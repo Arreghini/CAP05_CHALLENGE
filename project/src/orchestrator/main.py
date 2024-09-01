@@ -20,6 +20,12 @@ app = FastAPI()
 
 
 def stream_chat(prompt: str):
+    """
+La función stream_chat utiliza el modelo GPT-3.5-turbo de OpenAI para generar respuestas de chat de manera continua basándose en un aviso dado.
+prompt: La función stream_chat toma un aviso como entrada y utiliza el modelo GPT-3.5 de OpenAI para generar respuestas de chat basadas en el 
+aviso. La función transmite las respuestas del chat a medida que se generan.
+type prompt: str
+    """
     for chunk in openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         temperature=0.0,
@@ -32,6 +38,12 @@ def stream_chat(prompt: str):
 
 
 async def event_generator(query) -> AsyncGenerator[dict, None]:
+    """
+La función event_generator inicializa varios componentes como la caché de Redis, embeddings, la API de Google, el scraper y el splitter, y 
+luego crea un objeto retriever para un procesamiento adicional.
+query: La función event_generator parece estar configurando varios componentes como RedisVectorCache, OpenAIEmbeddings, GoogleAPI, ScraperLocal y 
+LangChainSplitter para crear una instancia de Retriever para manejar eventos basados en una consulta dada.
+    """
     redis = RedisVectorCache(host="cache", port=6379)
     embeddings = OpenAIEmbeddings()
     google = GoogleAPI()
@@ -57,6 +69,8 @@ async def event_generator(query) -> AsyncGenerator[dict, None]:
         embeddings=embeddings,
         splitter=splitter,
     )
+
+# Este bloque de código es parte de una función generadora de eventos asincrónica en Python. Aquí tienes un desglose de lo que hace:
     async for event in retriever.get_context(query=query, cache_treshold=0.85, k=10):
         yield event
         if event["event"] == "context":
@@ -68,6 +82,17 @@ async def event_generator(query) -> AsyncGenerator[dict, None]:
                 yield {"event": "token", "data": text}
 
 
+    """
+La función main configura un endpoint de streaming para búsquedas basadas en un parámetro de consulta utilizando FastAPI y devuelve una 
+EventSourceResponse.
+query: El código que proporcionaste configura un endpoint de FastAPI en /streamingSearch que espera un parámetro de consulta. Cuando un cliente 
+realiza una solicitud a este endpoint, recibirá un flujo de eventos enviados por el servidor generado por la función event_generator en base a la 
+consulta proporcionada.
+type query: str
+return: El fragmento de código define un endpoint de FastAPI en "/streamingSearch" que toma un parámetro de consulta como entrada. Cuando un 
+cliente accede a este endpoint, devolverá un objeto EventSourceResponse generado por la función event_generator con el parámetro de consulta 
+proporcionado.
+    """
 @app.get("/streamingSearch")
 async def main(query: str) -> EventSourceResponse:
     return EventSourceResponse(event_generator(query))

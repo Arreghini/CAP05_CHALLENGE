@@ -6,8 +6,8 @@ Basado en You.com y Google's Bard, este proyecto es un chatbot conversacional de
 
 ![ezgif-5-4b30015e27](https://github.com/santiagomorillosegovia/InternetWhisper/assets/28943730/26840b24-92d3-4ddf-bbd1-82cc6b992c7f)
 
-
 ## Explicacion Técnica
+
 Es un proyecto que utiliza FastAPI para crear una aplicación web que interactúa con la API de OpenAI, específicamente con el modelo GPT-3.5 Turbo, para generar respuestas en tiempo real a través de una interfaz de eventos de servidor enviados (SSE). A continuación, se detalla la funcionalidad de cada componente basado en los fragmentos de código proporcionados:
 
 - FastAPI: Se utiliza FastAPI como framework para crear una API web rápida y eficiente. FastAPI facilita la creación de endpoints y la gestión de solicitudes y respuestas HTTP.
@@ -32,45 +32,46 @@ Sigue estos pasos para ejecutar el chatbot localmente en tu máquina:
 
 1. **Configurar variables de entorno**:
 
-    - Cree un archivo `.env` copiando el archivo `.env.example` proporcionado. Este archivo debe contener las siguientes variables de entorno:
-        - `HEADER_ACCEPT_ENCODING`: Ajústala a "gzip".
-        - `HEADER_USER_AGENT`: Utilice una cadena de agente de usuario, por ejemplo, "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, como Gecko) Chrome/116.0.0.0 Safari/537.36 (gzip)".
-        - `GOOGLE_API_HOST`: Establece el host de la API de Google en "https://www.googleapis.com/customsearch/v1?".
-        - `GOOGLE_FIELDS`: Define los campos que deseas recuperar de Google. Ejemplo: "items(title, displayLink, link, snippet,pagemap/cse_thumbnail)".
-        - `GOOGLE_API_KEY`: Obtener una clave API de Google de [Google Custom Search](https://developers.google.com/custom-search/v1/overview).
-        - `GOOGLE_CX`: Puedes obtener tu ID de motor de búsqueda personalizado (CX) en la misma página de búsqueda personalizada de Google.
-        - `OPENAI_API_KEY`: Obtén una clave API de [OpenAI](https://openai.com/blog/openai-api).
+   - Cree un archivo `.env` copiando el archivo `.env.example` proporcionado. Este archivo debe contener las siguientes variables de entorno:
+     - `HEADER_ACCEPT_ENCODING`: Ajústala a "gzip".
+     - `HEADER_USER_AGENT`: Utilice una cadena de agente de usuario, por ejemplo, "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, como Gecko) Chrome/116.0.0.0 Safari/537.36 (gzip)".
+     - `GOOGLE_API_HOST`: Establece el host de la API de Google en "https://www.googleapis.com/customsearch/v1?".
+     - `GOOGLE_FIELDS`: Define los campos que deseas recuperar de Google. Ejemplo: "items(title, displayLink, link, snippet,pagemap/cse_thumbnail)".
+     - `GOOGLE_API_KEY`: Obtener una clave API de Google de [Google Custom Search](https://developers.google.com/custom-search/v1/overview).
+     - `GOOGLE_CX`: Puedes obtener tu ID de motor de búsqueda personalizado (CX) en la misma página de búsqueda personalizada de Google.
+     - `OPENAI_API_KEY`: Obtén una clave API de [OpenAI](https://openai.com/blog/openai-api).
 
 2. **Construir y ejecutar la aplicación**:
 
-    - Abre tu terminal y navega al directorio del proyecto.
-    - Ejecuta los siguientes comandos para compilar e iniciar la aplicación utilizando Docker Compose:
+   - Abre tu terminal y navega al directorio del proyecto.
+   - Ejecuta los siguientes comandos para compilar e iniciar la aplicación utilizando Docker Compose:
 
-    ```bash
-    docker-compose build
-    docker-compose up
-    ```
+   ```bash
+   docker-compose build
+   docker-compose up
+   ```
 
 3. **Elige tu clase de scraper**:
 
-    El proyecto incluye dos clases de scraper:
+   El proyecto incluye dos clases de scraper:
 
-    - `ScraperLocal`: Utiliza aiohttp para el web scraping (por defecto).
-    - `ScraperRemote`: Utiliza Playwright en un contenedor replicado separado para un renderizado de JavaScript más complejo.
+   - `ScraperLocal`: Utiliza aiohttp para el web scraping (por defecto).
+   - `ScraperRemote`: Utiliza Playwright en un contenedor replicado separado para un renderizado de JavaScript más complejo.
 
-    Para cambiar entre las clases de scraper, modifica el archivo `orchestrator/main.py` y descomenta los servicios scraper y lb-scraper apropiados en `docker-compose.yml`.
+   Para cambiar entre las clases de scraper, modifica el archivo `orchestrator/main.py` y descomenta los servicios scraper y lb-scraper apropiados en `docker-compose.yml`.
 
 4. - `OpenAIEmbeddings`: La opción por defecto, usando los embeddings de OpenAI.
 
 5. **Accede al Chatbot**:
 
-    Después de ejecutar la aplicación, abre tu navegador web y navega a [http://localhost:8501/](http://localhost:8501/) para interactuar con el chatbot.
+   Después de ejecutar la aplicación, abre tu navegador web y navega a [http://localhost:8501/](http://localhost:8501/) para interactuar con el chatbot.
 
 Siéntete libre de explorar y modificar este chatbot conversacional de IA para tu caso de uso específico. ¡Disfruta chateando con tu nuevo compañero de IA!
 
 Traducción realizada con la versión gratuita del traductor DeepL.com
 
 ## Definicion OpenAPI
+
 ```json
 {
   "openapi": "3.0.0",

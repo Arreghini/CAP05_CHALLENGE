@@ -1,13 +1,17 @@
 # Desafío: Documentación de "InternetWhisper" con Inteligencia Artificial
+
 ![ezgif-5-4b30015e27](https://github.com/santiagomorillosegovia/InternetWhisper/assets/28943730/26840b24-92d3-4ddf-bbd1-82cc6b992c7f)
 
 ## Contexto del Desafío:
+
 Bienvenidos al desafío de documentación de "InternetWhisper", un proyecto de chatbot de IA único con la capacidad de interactuar con Internet. Este chatbot no es un asistente virtual común; es una herramienta de inteligencia artificial diseñada para buscar, entender y proporcionar información del mundo online en tiempo real. Su tarea, como participantes de este desafío, es sumergirse en este proyecto innovador, entender su esencia y funcionalidades, y producir un documento README detallado que sirva como la primera ventana a enfrentarse a "InternetWhisper".
 
 ## Objetivo del Desafío:
+
 Crear un README detallado y técnico para el proyecto "InternetWhisper" utilizando herramientas de inteligencia artificial, como Cody AI, ChatGPT o BlackBox, para facilitar y optimizar el proceso de documentación. Este documento debe ser claro, informativo, y accesible, proporcionando a los nuevos usuarios y desarrolladores todas las herramientas necesarias para entender, configurar y ejecutar la aplicación.
 
 ## Criterios del README:
+
 Su README debe incluir, pero no se limita a, las siguientes secciones:
 
 - `Descripción del Proyecto`: Proporcione una visión general de "InternetWhisper", enfocándose en su propósito, capacidades únicas, y valor agregado como chatbot conversacional de IA.
