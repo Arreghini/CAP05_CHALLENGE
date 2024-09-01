@@ -1,3 +1,5 @@
+# El código define clases abstractas para embeddings y proporciona implementaciones para embeddings remotos utilizando aiohttp y 
+# OpenAI embeddings.
 from abc import ABC, abstractmethod
 import json
 import aiohttp

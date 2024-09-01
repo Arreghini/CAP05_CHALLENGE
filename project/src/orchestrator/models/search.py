@@ -1,3 +1,5 @@
+# El código define modelos de Pydantic para representar resultados de búsqueda con campos opcionales.
+
 from typing import List, Optional
 from pydantic import BaseModel
 

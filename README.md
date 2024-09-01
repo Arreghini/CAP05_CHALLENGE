@@ -48,3 +48,20 @@ La aplicación integra estas tecnologías para procesar las consultas de los usu
    ```bash
    docker-compose build
    docker-compose up
+
+## Definición OpenAPI de la API
+
+La documentación OpenAPI de InternetWhisper se genera automáticamente gracias a FastAPI. Para acceder a ella:
+
+1. Inicia la aplicación siguiendo los pasos mencionados anteriormente.
+2. Abre tu navegador y visita `http://localhost:8000/docs` para ver la interfaz Swagger UI.
+3. Alternativamente, puedes acceder a `http://localhost:8000/redoc` para una versión más detallada usando ReDoc.
+
+Esta documentación es crucial ya que:
+
+- Proporciona una visión general de todos los endpoints disponibles.
+- Permite probar la API directamente desde el navegador.
+- Facilita la comprensión de los parámetros de entrada y los formatos de respuesta.
+- Ayuda a los desarrolladores a integrar InternetWhisper en sus propias aplicaciones.
+
+La definición OpenAPI incluye detalles sobre el endpoint `/streamingSearch`, que es el corazón de nuestra aplicación. Utiliza esta documentación para entender cómo realizar consultas y qué esperar como respuesta.

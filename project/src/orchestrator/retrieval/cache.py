@@ -1,3 +1,4 @@
+
 from abc import ABC, abstractmethod
 import hashlib
 import json
@@ -14,7 +15,8 @@ from models.document import Document
 
 VECTOR_DIMENSION = 1536
 
-
+# La clase VectorDbCache define métodos abstractos para encontrar documentos similares y para escribir documentos en una caché de base de datos 
+# vectorial.
 class VectorDbCache(ABC):
     @abstractmethod
     async def find_similar(self, vector: list[float], k=10) -> list[Document]:
@@ -28,6 +30,8 @@ class VectorDbCache(ABC):
 SHA256 = hashlib.sha256()
 
 
+# La clase RedisVectorCache es una subclase de VectorDbCache que utiliza Redis para la caché e implementa un método para encontrar documentos 
+# similares basados en vectores de entrada.
 class RedisVectorCache(VectorDbCache):
     _pool = None
 
@@ -64,6 +68,14 @@ class RedisVectorCache(VectorDbCache):
         return list(documents)
 
     async def get_insertables(self, documents: list[Document]) -> list[Document]:
+        """
+    Esta función toma una lista de documentos, encuentra documentos similares y devuelve una lista de documentos que se consideran insertables
+    basándose en un umbral de similitud.
+    documents: El parámetro documents es una lista de objetos Document que se pasan al método get_insertables. Cada objeto Document probablemente 
+    contiene información o datos que necesitan ser procesados dentro del método.
+    type documents: list[Document]
+    return: El método get_insertables devuelve una lista de objetos Document que se consideran insertables según ciertas condiciones.
+        """
         insertables = []
         for document in documents:
             results = await self.find_similar(document.vector, k=1)
@@ -74,6 +86,13 @@ class RedisVectorCache(VectorDbCache):
         return insertables
 
     async def write(self, documents: list[Document]):
+        """
+    La función escribe una lista de documentos en una base de datos Redis utilizando una operación de pipeline específica.
+    documents: El método write parece estar escribiendo documentos en una base de datos Redis utilizando un pipeline para mejorar el rendimiento. 
+    Calcula un hash SHA256 para el texto de cada documento, establece una clave en Redis con el ID del fragmento, y luego almacena los datos del 
+    documento en formato JSON con un tiempo de expiración de 360.
+    type documents: list[Document]
+        """
         documents = await self.get_insertables(documents)
         pipeline = self.client.pipeline()
         for document in documents:
@@ -87,6 +106,9 @@ class RedisVectorCache(VectorDbCache):
         pipeline.execute()
 
     def init_test(self):
+        """
+       Esta función lee datos de un archivo pickle, los procesa, calcula un hash SHA256 y almacena los datos en Redis utilizando un pipeline.
+        """
         df = pd.read_pickle("mocks/database_pickle")
         df["vector"] = df["vector"].apply(lambda x: x.tolist()[0])
         chunks = df.to_dict("records")
@@ -100,6 +122,12 @@ class RedisVectorCache(VectorDbCache):
         pipeline.execute()
 
     def init_index(self, vector_dimension):
+        """
+    La función init_index inicializa un índice con un esquema y una definición específicos para un servicio de búsqueda vectorial.
+    vector_dimension: El parámetro vector_dimension en el método init_index se utiliza para especificar la dimensionalidad del campo vectorial 
+    que se creará en el índice. Esta dimensionalidad determina la cantidad de componentes en el campo vectorial. En el fragmento de código 
+    proporcionado, el campo vectorial se define con una dimensión especificada.
+        """
         schema = (
             TextField("$.text", no_stem=True, as_name="text"),
             TextField("$.url", no_stem=True, as_name="url"),

@@ -1,3 +1,5 @@
+# La clase Retriever está diseñada para generar contexto basado en una consulta, recuperando y procesando documentos relevantes desde la 
+# caché o desde internet mediante el uso de embeddings, búsqueda, raspado y cálculos de similitud coseno.
 import asyncio
 import json
 import time
@@ -100,6 +102,19 @@ class Retriever:
         return relevant_documents
 
     async def get_most_similar(self, query_vector, data, k=5) -> list[Document]:
+        """
+    Esta función recupera los textos más relevantes basándose en la similitud coseno con un vector de consulta dado.
+    query_vector: El parámetro query_vector es un vector que representa la consulta para la cual deseas encontrar los textos más similares 
+    basados en la similitud coseno. Se espera que sea una lista de valores numéricos que representan las características del vector de consulta.
+    data: El parámetro data en el método get_most_similar se espera que sea una lista de diccionarios donde cada diccionario representa un 
+    documento con claves como "text", "url" y "vector". La clave "vector" debe contener una lista que representa la representación vectorial del 
+    texto del documento.
+    k: El parámetro k en la función get_most_similar representa el número de textos más relevantes que deseas recuperar basándote en la similitud 
+    coseno. Especifica los k documentos más similares al vector de consulta. En el fragmento de código proporcionado, k=5 es el valor 
+    predeterminado (opcional).
+    return: La función get_most_similar devuelve una lista de objetos Document que representan los textos más relevantes basados en la similitud 
+    coseno con el vector de consulta proporcionado.
+        """
         """Get most relevant texts based on cosine similarity"""
 
         query_vector = np.array(query_vector).reshape(1, -1)
