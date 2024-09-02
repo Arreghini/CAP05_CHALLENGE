@@ -76,26 +76,30 @@ class CustomSSEClient(SSEClient):
             yield event
 
 
+from requests.exceptions import RequestException
+
 def backend_call(prompt):
-    max_retries = 3
-    retry_delay = 1
+    max_retries = 5
+    retry_delay = 2
+    timeout = 10
 
     for attempt in range(max_retries):
         try:
             url = f"http://orchestrator:8000/streamingSearch?query={prompt}"
-            response = requests.get(url, stream=True)
+            response = requests.get(url, stream=True, timeout=timeout)
+            response.raise_for_status()
             client = CustomSSEClient(response)
             for event in client.events():
                 yield event
             break
-        except requests.ConnectionError as e:
-            print(f"Error de conexión: {e}")
+        except RequestException as e:
+            print(f"Intento {attempt + 1} fallido: {e}")
             if attempt < max_retries - 1:
                 time.sleep(retry_delay)
                 retry_delay *= 2
             else:
+                print("No se pudo establecer conexión con el backend después de múltiples intentos.")
                 raise
-
 
 
 
