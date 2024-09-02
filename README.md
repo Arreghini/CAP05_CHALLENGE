@@ -53,6 +53,12 @@ La aplicación integra estas tecnologías para procesar las consultas de los usu
 
 ## Definición OpenAPI de la API
 
+la API en este proyecto es FastAPI.
+El proyecto utiliza FastAPI como framework para crear esta API web rápida y eficiente, facilitando la creación de endpoints y la gestión de solicitudes y respuestas HTTP.
+
+La definición OpenAPI muestra un endpoint /streamingSearch que utiliza el método GET. Este endpoint acepta un parámetro de consulta llamado "query" y devuelve una respuesta en formato de flujo de eventos (text/event-stream).
+La API está diseñada para manejar solicitudes de búsqueda en tiempo real y proporcionar respuestas utilizando Server-Sent Events (SSE). Esto permite una comunicación en tiempo real entre el cliente y el servidor, donde el servidor puede enviar actualizaciones continuas al cliente sin necesidad de solicitudes adicionales.
+
 La documentación OpenAPI de InternetWhisper se genera automáticamente gracias a FastAPI. Para acceder a ella:
 
 1. Inicia la aplicación siguiendo los pasos mencionados anteriormente.

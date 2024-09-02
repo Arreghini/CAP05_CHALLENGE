@@ -30,6 +30,73 @@ streaming al servidor. Utiliza Eventos Enviados por el Servidor (SSE).
     # Loop forever (while connection "open")
     for event in client.events():
         yield event
+        
+from requests.exceptions import ChunkedEncodingError
+import time
+
+from sseclient import SSEClient
+
+class CustomSSEClient(SSEClient):
+    def events(self):
+        data = b""  # Asegúrate de que data sea de tipo bytes
+        for chunk in self._read():
+            if isinstance(chunk, str):
+                chunk = chunk.encode('utf-8')  # Convierte chunk a bytes si es una cadena
+            elif isinstance(chunk, bytes):
+                pass  # Ya es bytes, no se necesita conversión
+            else:
+                continue  # Maneja otros tipos de datos si es necesario
+
+            data += chunk
+            for line in data.decode(self._char_enc).splitlines():
+                if line.startswith(':'):
+                    continue
+                if not line:
+                    yield event
+                    event = self._event_class()
+                    continue
+                data = line.split(':', 1)
+                field = data[0]
+                if len(data) > 1:
+                    value = data[1].lstrip()
+                else:
+                    value = ''
+                if field == 'data':
+                    event.data += value + '\n'
+                elif field == 'event':
+                    event.event = value
+                elif field == 'id':
+                    event.id = value
+                elif field == 'retry':
+                    try:
+                        event.retry = int(value)
+                    except ValueError:
+                        pass
+        if event.data:
+            yield event
+
+
+def backend_call(prompt):
+    max_retries = 3
+    retry_delay = 1
+
+    for attempt in range(max_retries):
+        try:
+            url = f"http://orchestrator:8000/streamingSearch?query={prompt}"
+            response = requests.get(url, stream=True)
+            client = CustomSSEClient(response)
+            for event in client.events():
+                yield event
+            break
+        except requests.ConnectionError as e:
+            print(f"Error de conexión: {e}")
+            if attempt < max_retries - 1:
+                time.sleep(retry_delay)
+                retry_delay *= 2
+            else:
+                raise
+
+
 
 
 def display_chat_messages():

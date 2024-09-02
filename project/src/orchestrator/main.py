@@ -85,7 +85,7 @@ LangChainSplitter para crear una instancia de Retriever para manejar eventos bas
     """
 La función main configura un endpoint de streaming para búsquedas basadas en un parámetro de consulta utilizando FastAPI y devuelve una 
 EventSourceResponse.
-query: El código que proporcionaste configura un endpoint de FastAPI en /streamingSearch que espera un parámetro de consulta. Cuando un cliente 
+query: El código configura un endpoint de FastAPI en /streamingSearch que espera un parámetro de consulta. Cuando un cliente 
 realiza una solicitud a este endpoint, recibirá un flujo de eventos enviados por el servidor generado por la función event_generator en base a la 
 consulta proporcionada.
 type query: str

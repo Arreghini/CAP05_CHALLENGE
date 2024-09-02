@@ -6,6 +6,8 @@ import aiohttp
 from bs4 import BeautifulSoup
 
 
+# Esta clase de Python define un Scraper con un método abstracto fetch para obtener datos desde una URL y un método parse para extraer 
+# texto del contenido HTML.
 class Scraper(ABC):
     @abstractmethod
     async def fetch(self, url: str) -> dict[str, Any]:
@@ -18,6 +20,10 @@ class Scraper(ABC):
         raw_text = soup.get_text(separator=" ", strip=True)
         text = re.sub(r"\n{3,}|\s{2,}", "\n", raw_text)
         return text
+
+
+#La clase ScraperRemote es una subclase de Scraper que obtiene y analiza contenido HTML de un servidor remoto utilizando solicitudes 
+# asincrónicas.
 
 
 class ScraperRemote(Scraper):
@@ -35,7 +41,8 @@ class ScraperRemote(Scraper):
                         return {"url": url, "text": text}
             return {"url": url, "text": None}
 
-
+# La clase ScraperLocal es una subclase de Scraper que define un método asincrónico fetch para obtener y analizar contenido HTML desde una 
+# URL dada utilizando aiohttp.
 class ScraperLocal(Scraper):
     async def fetch(self, url):
         async with aiohttp.ClientSession() as session:
