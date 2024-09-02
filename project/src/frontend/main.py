@@ -85,7 +85,7 @@ def backend_call(prompt):
 
     for attempt in range(max_retries):
         try:
-            url = f"http://orchestrator:8000/streamingSearch?query={prompt}"
+            url = f"http://orchestrator:80/streamingSearch?query={prompt}"
             response = requests.get(url, stream=True, timeout=timeout)
             response.raise_for_status()
             client = CustomSSEClient(response)
